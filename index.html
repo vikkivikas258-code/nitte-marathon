@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nitte Marathon 2026</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Poppins',sans-serif;
+            background:#f4f6fb;
+        }
+
+        /* LOGIN CHECK */
+
+        /* CONTACT BUTTON */
+        .contact-btn{
+            position:fixed;
+            top:20px;
+            left:20px;
+            background:linear-gradient(135deg,#ff9800,#ff5722);
+            color:white;
+            border:none;
+            padding:12px 22px;
+            border-radius:30px;
+            cursor:pointer;
+            font-size:16px;
+            z-index:1000;
+            transition:0.4s;
+            box-shadow:0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .contact-btn:hover{
+            transform:scale(1.08);
+        }
+
+        /* GALLERY BUTTON */
+        .gallery-btn{
+            position:fixed;
+            top:20px;
+            right:20px;
+            background:linear-gradient(135deg,#4facfe,#00f2fe);
+            color:white;
+            padding:12px 22px;
+            border-radius:30px;
+            text-decoration:none;
+            font-size:16px;
+            font-weight:600;
+            z-index:1000;
+            transition:0.4s;
+            box-shadow:0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .gallery-btn:hover{
+            transform:scale(1.08);
+        }
+
+        /* MOVING TEXT */
+        .top-marquee{
+            position:fixed;
+            top:20px;
+            left:170px;
+            right:170px;
+            background:rgba(0,0,0,0.55);
+            color:white;
+            padding:14px;
+            border-radius:40px;
+            z-index:1000;
+            font-size:18px;
+            font-weight:600;
+            backdrop-filter:blur(5px);
+        }
+
+        /* CONTACT BOX */
+        .contact-box{
+            display:none;
+            position:fixed;
+            top:90px;
+            left:20px;
+            background:white;
+            padding:20px;
+            border-radius:15px;
+            box-shadow:0 5px 20px rgba(0,0,0,0.2);
+            z-index:1000;
+            width:250px;
+        }
+
+        .contact-box h3{
+            margin-bottom:10px;
+        }
+
+        .contact-box p{
+            margin:10px 0;
+        }
+
+        .contact-box button{
+            margin-top:10px;
+            background:#ff5722;
+            color:white;
+            border:none;
+            padding:10px 15px;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+        /* HERO SECTION */
+        .hero{
+            height:100vh;
+            background-image:url('https://i.pinimg.com/1200x/86/a0/53/86a053f42a922a31d7c185a92c24845c.jpg');
+            background-size:cover;
+            background-position:center;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            text-align:center;
+            position:relative;
+        }
+
+        .hero::before{
+            content:'';
+            position:absolute;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.55);
+        }
+
+        .hero h1,
+        .hero p,
+        .hero .btn{
+            position:relative;
+            z-index:2;
+        }
+
+        .hero h1{
+            color:white;
+            font-size:85px;
+            font-weight:700;
+            text-shadow:
+            0 0 10px #fff,
+            0 0 20px #00f2fe,
+            0 0 40px #4facfe;
+            animation:glow 2s infinite alternate;
+        }
+
+        @keyframes glow{
+            from{
+                text-shadow:0 0 5px #fff;
+            }
+            to{
+                text-shadow:
+                0 0 15px #fff,
+                0 0 30px #4facfe,
+                0 0 50px #00f2fe;
+            }
+        }
+
+        .hero p{
+            color:white;
+            margin-top:20px;
+            font-size:28px;
+        }
+
+        .btn{
+            margin-top:30px;
+            display:inline-block;
+            background:linear-gradient(135deg,#ff9800,#ff5722);
+            color:white;
+            text-decoration:none;
+            padding:15px 35px;
+            border-radius:35px;
+            font-size:20px;
+            font-weight:600;
+            transition:0.4s;
+            box-shadow:0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn:hover{
+            transform:translateY(-5px) scale(1.05);
+        }
+
+        /* REGISTRATION COUNTER */
+        .count-box{
+            width:320px;
+            margin:50px auto;
+            background:white;
+            text-align:center;
+            padding:30px;
+            border-radius:20px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .count-box h2{
+            margin-bottom:15px;
+        }
+
+        .count-box h1{
+            color:#ff5722;
+            font-size:60px;
+        }
+
+        /* SECTIONS */
+        .section{
+            padding:80px 20px;
+            text-align:center;
+        }
+
+        .section h2{
+            font-size:50px;
+            margin-bottom:15px;
+            color:#222;
+        }
+
+        .section p{
+            color:#555;
+            margin-bottom:30px;
+        }
+
+        /* CARDS */
+        .cards{
+            display:flex;
+            justify-content:center;
+            gap:25px;
+            flex-wrap:wrap;
+            margin-top:40px;
+        }
+
+        .card{
+            background:white;
+            width:280px;
+            padding:35px 25px;
+            border-radius:20px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.1);
+            transition:0.4s;
+            animation:fadeUp 1s ease forwards;
+            opacity:0;
+        }
+
+        .card:hover{
+            transform:translateY(-12px) scale(1.04);
+            box-shadow:0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .card h3{
+            margin-bottom:15px;
+            font-size:30px;
+        }
+
+        .card p{
+            font-size:18px;
+            line-height:1.7;
+        }
+
+        @keyframes fadeUp{
+            from{
+                opacity:0;
+                transform:translateY(50px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        .card:nth-child(1){animation-delay:0.2s;}
+        .card:nth-child(2){animation-delay:0.4s;}
+        .card:nth-child(3){animation-delay:0.6s;}
+
+        /* LOGOUT BUTTON */
+        .logout-btn{
+            display:block;
+            width:200px;
+            margin:60px auto;
+            text-align:center;
+            background:linear-gradient(135deg,#ff4d4d,#ff0000);
+            color:white;
+            padding:15px;
+            border-radius:35px;
+            text-decoration:none;
+            font-size:18px;
+            font-weight:600;
+            transition:0.4s;
+        }
+
+        .logout-btn:hover{
+            transform:scale(1.05);
+        }
+
+        @media(max-width:768px){
+            .hero h1{
+                font-size:50px;
+            }
+
+            .hero p{
+                font-size:20px;
+            }
+
+            .top-marquee{
+                left:120px;
+                right:120px;
+                font-size:14px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <script>
+        if(localStorage.getItem("loggedIn") !== "true"){
+            window.location.href = "login.html";
+        }
+    </script>
+
+    <!-- CONTACT BUTTON -->
+    <button class="contact-btn" onclick="showContact()">Contact Us</button>
+
+    <!-- GALLERY BUTTON -->
+    <a href="gallery.html" class="gallery-btn">📸 Gallery</a>
+
+    <!-- MOVING TEXT -->
+    <div class="top-marquee">
+        <marquee>
+            🏃 Upcoming Event • Mini Nitte Marathon • Registrations Open 0n August 2026 • 5K | 10K | Fun Run • wait for upcoming updates 🔥
+        </marquee>
+    </div>
+
+    <!-- CONTACT BOX -->
+    <div class="contact-box" id="contactBox">
+        <h3>Contact Us</h3>
+
+        <p>📞 Phone: 9876543210</p>
+        <p>📧 Email: nitte@marathon.com</p>
+        <p>📍 Bengaluru</p>
+
+        <button onclick="closeContact()">Close</button>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+
+        <h1>Nitte Marathon 2026</h1>
+
+        <p>Join the biggest running event in Bengaluru</p>
+
+        <a href="https://forms.gle/GTbKngJrB5sMNbt17" target="_blank" class="btn">
+            Register Now
+        </a>
+
+    </div>
+
+    <!-- WHAT YOU RECEIVE -->
+    <div class="section">
+
+        <h2>What You Will Receive</h2>
+
+        <p>Every participant receives</p>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>🏅</h3>
+                <h3>Finisher Medal</h3>
+                <p>
+                    All participants will receive a medal after finishing the race.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>⏱</h3>
+                <h3>Timing Certificate</h3>
+                <p>
+                    Timing certificates will be available after the event.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>👕</h3>
+                <h3>Running Kit</h3>
+                <p>
+                    T-shirt, bib number and goodies included.
+                </p>
+                <br>
+
+    <a href="bib.html" class="btn">
+        Bib Expo
+    </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MORE INFORMATION -->
+    <div class="section">
+
+        <h2>More Information</h2>
+
+        <p>Explore more about the marathon</p>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>ℹ️</h3>
+                <h3>About Us</h3>
+
+                <p>
+                    Learn about Nitte Marathon and previous successful events.
+                </p>
+
+                <a href="about.html" class="btn">More Details</a>
+            </div>
+
+            <div class="card">
+                <h3>📜</h3>
+                <h3>Rules & Regulations</h3>
+
+                <p>
+                    Check event rules, safety guidelines and participation details.
+                </p>
+
+                <a href="rules.html" class="btn">View Rules</a>
+            </div>
+
+            <div class="card">
+                <h3>🏆</h3>
+                <h3>Results</h3>
+
+                <p>
+                    View previous year winners and marathon timings.
+                </p>
+
+                <a href="results.html" class="btn">View Results</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- LOGOUT -->
+    <a href="#" onclick="logout()" class="logout-btn">Logout</a>
+
+    <script>
+
+        function showContact(){
+            document.getElementById('contactBox').style.display = 'block';
+        }
+
+        function closeContact(){
+            document.getElementById('contactBox').style.display = 'none';
+        }
+
+        function logout(){
+            localStorage.removeItem('loggedIn');
+            window.location.href='login.html';
+        }
+
+    </script>
+
+</body>
+</html>
