@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gallery - Nitte Marathon 2026</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f4f6fb;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 45px;
+        }
+
+        /* GRID */
+        .gallery {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .gallery img:hover {
+            transform: scale(1.07);
+            filter: brightness(1.1);
+        }
+
+        /* LIGHTBOX */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .lightbox img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 35px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .nav {
+            margin-top: 20px;
+        }
+
+        .nav button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            background: orange;
+            color: white;
+        }
+
+        /* BUTTON */
+        .btn {
+            display: inline-block;
+            margin: 20px auto;
+            background: orange;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🏃 Marathon Gallery</h1>
+    <p>Memories of Nitte Marathon </p>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery">
+
+    <!-- 20+ IMAGES -->
+    <img src="https://i.pinimg.com/736x/98/49/ea/9849ea8e15755e7b8337ba8d15013398.jpg">
+    <img src="https://i.pinimg.com/1200x/86/a0/53/86a053f42a922a31d7c185a92c24845c.jpg">
+    <img src="https://i.pinimg.com/736x/a4/b0/29/a4b029fb917fd075e1d7e44c2808e507.jpg">
+    <img src="https://i.pinimg.com/736x/76/ff/ca/76ffcaedd8f5ff803780b3b1401e58b4.jpg">
+    <img src="https://i.pinimg.com/736x/0e/0c/aa/0e0caa7f104b87ee88ec91b26f0ffe4f.jpg">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuJhZabRl3Kx55ABWrbteSHt9KoQTaYu8mkQ&s">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROHB1qZ-N6m85F8u43r1XyaWJvo6uhecHQ6Q&s">
+    <img src="https://i.pinimg.com/736x/ff/3f/98/ff3f98faa7114da5a5895ee6b0ebfd25.jpg">
+    <img src="https://i.pinimg.com/736x/3b/67/81/3b6781b25527080a78096b38fe1a9321.jpg">
+    <img src="https://i.pinimg.com/736x/0e/ef/f0/0eeff08a2e9d3b50ad62d5393f3ea9c7.jpg">
+    <img src="https://i.pinimg.com/736x/e5/53/4c/e5534c46829d57f66cdb8428059c13e5.jpg">
+    <img src="https://i.pinimg.com/736x/c7/3a/d8/c73ad82487a43d1512bf582efdd4e91b.jpg">
+    <img src="https://i.pinimg.com/736x/7f/cf/9b/7fcf9b4e2d7d1a71c5d74aedb4e632f4.jpg">
+    <img src="https://i.pinimg.com/736x/8a/eb/b8/8aebb8e396d25390a63943d388dbe0ae.jpg">
+    <img src="https://i.pinimg.com/736x/98/28/55/982855448aa8d2a52958525e4e58c314.jpg">
+
+
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+
+    <span class="close" onclick="closeLightbox()">×</span>
+
+    <img id="lightboxImg">
+
+    <div class="nav">
+        <button onclick="prevImg()">⬅ Prev</button>
+        <button onclick="nextImg()">Next ➡</button>
+    </div>
+
+</div>
+
+<div class="center">
+    <a href="index.html" class="btn">⬅ Back to Home</a>
+</div>
+
+<script>
+    const images = document.querySelectorAll(".gallery img");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+
+    let currentIndex = 0;
+
+    images.forEach((img, index) => {
+        img.addEventListener("click", () => {
+            currentIndex = index;
+            openLightbox(img.src);
+        });
+    });
+
+    function openLightbox(src) {
+        lightbox.style.display = "flex";
+        lightboxImg.src = src;
+    }
+
+    function closeLightbox() {
+        lightbox.style.display = "none";
+    }
+
+    function nextImg() {
+        currentIndex = (currentIndex + 1) % images.length;
+        lightboxImg.src = images[currentIndex].src;
+    }
+
+    function prevImg() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        lightboxImg.src = images[currentIndex].src;
+    }
+
+</script>
+
+</body>
+</html>
