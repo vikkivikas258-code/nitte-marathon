@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1600&auto=format&fit=crop') center/cover;
+        }
+
+        .o {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+        }
+
+        .b {
+            position: relative;
+            z-index: 1;
+            width: 360px;
+            background: rgba(255, 255, 255, .15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            color: #fff;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            background: #ff9800;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        a {
+            color: #ffd54f;
+            cursor: pointer;
+        }
+
+        #msg {
+            color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="o"></div>
+
+    <div class="b">
+        <h2 id="title">Sign Up</h2>
+
+        <input id="user" placeholder="Username">
+
+        <input id="pass" type="password" placeholder="Password">
+
+        <label>
+            <input id="remember" type="checkbox">
+            Remember Me
+        </label>
+
+        <button id="mainBtn">Sign Up</button>
+
+        <p>
+            <a onclick="forgotPassword()">Forgot Password?</a>
+        </p>
+
+        <p>
+            <a id="sw" onclick="switchMode()">
+                Already have an account? Login
+            </a>
+        </p>
+
+        <p id="msg"></p>
+    </div>
+
+    <script>
+
+        let isLogin = false;
+
+        function switchMode() {
+            isLogin = !isLogin;
+
+            title.innerText = isLogin ? "Login" : "Sign Up";
+            mainBtn.innerText = isLogin ? "Login" : "Sign Up";
+
+            sw.innerText = isLogin
+                ? "Don't have an account? Sign Up"
+                : "Already have an account? Login";
+
+            msg.innerText = "";
+        }
+
+        function vu(u) {
+            return /^[A-Za-z0-9]{4,}$/.test(u);
+        }
+
+        function vp(p) {
+            return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(p);
+        }
+
+        mainBtn.onclick = () => {
+
+            let u = user.value.trim();
+            let p = pass.value;
+
+            if (!vu(u)) {
+                msg.innerText = "Invalid username";
+                return;
+            }
+
+            if (!vp(p)) {
+                msg.innerText = "Weak password";
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem("users") || "{}");
+
+            if (isLogin) {
+
+                if (!(u in users)) {
+                    msg.innerText = "User not found";
+                    return;
+                }
+
+                if (users[u] != p) {
+                    msg.innerText = "Wrong password";
+                    return;
+                }
+
+                localStorage.setItem("loggedIn", "true");
+
+                if (remember.checked) {
+                    localStorage.setItem("rememberUser", u);
+                }
+
+                location.href = "index.html";
+
+            } else {
+
+                if (u in users) {
+                    msg.innerText = "Username exists";
+                    return;
+                }
+
+                users[u] = p;
+
+                localStorage.setItem("users", JSON.stringify(users));
+
+                alert("Signup successful");
+
+                switchMode();
+            }
+        };
+
+        function forgotPassword() {
+
+            let u = prompt("Enter username");
+
+            if (!u) return;
+
+            let users = JSON.parse(localStorage.getItem("users") || "{}");
+
+            if (users[u]) {
+                alert("Password: " + users[u]);
+            } else {
+                alert("Username not found");
+            }
+        }
+
+        window.onload = () => {
+
+            let r = localStorage.getItem("rememberUser");
+
+            if (r) {
+                user.value = r;
+                remember.checked = true;
+            }
+        };
+
+    </script>
+
+</body>
+
+</html>
